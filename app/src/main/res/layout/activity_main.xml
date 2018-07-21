@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+
+    <SeekBar
+        android:id="@+id/seekbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="436dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView_Time"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_Play"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginStart="30dp"
+        android:background="@drawable/ic_play_arrow_black_24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button_Next"
+        app:layout_constraintStart_toEndOf="@+id/button_Previous"
+        app:layout_constraintTop_toBottomOf="@+id/seekbar" />
+
+    <Button
+        android:id="@+id/button_Previous"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginStart="100dp"
+        android:background="@drawable/ic_skip_previous_black_24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button_Play"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/seekbar" />
+
+    <Button
+        android:id="@+id/button_Next"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginRight="100dp"
+        android:background="@drawable/ic_skip_next_black_24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button_Play"
+        app:layout_constraintTop_toBottomOf="@+id/seekbar" />
+
+    <TextView
+        android:id="@+id/textView_Time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="76dp"
+        android:layout_marginEnd="252dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="252dp"
+        android:layout_marginStart="16dp"
+        android:text="10:10"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/textView_TimeFinal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/seekbar" />
+
+    <TextView
+        android:id="@+id/textView_TimeFinal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="76dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:text="10:10"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView_Time"
+        app:layout_constraintTop_toBottomOf="@+id/seekbar" />
+</android.support.constraint.ConstraintLayout>
