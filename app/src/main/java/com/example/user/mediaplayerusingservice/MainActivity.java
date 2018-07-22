@@ -5,6 +5,7 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
+import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
@@ -12,6 +13,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
@@ -32,22 +34,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView mTextView_final;
     private int checkingMaxSeekBar;
     Intent MediaService;
+    Bundle dataKeeper_Main2toMain;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         iniView();
+
+        dataKeeper_Main2toMain = this.getIntent().getExtras();
+        int number = dataKeeper_Main2toMain.getInt("Song");
+
         MediaService = new Intent(this,MyMusicService.class);
+        MediaService.putExtra("Song",number);
+
         startService(MediaService);
 
-        if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(MainActivity.this,new String[]{
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-            },1);
+        if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+          ActivityCompat.requestPermissions(MainActivity.this, new String[]{
+                  Manifest.permission.WRITE_EXTERNAL_STORAGE
+          }, 1);
         }
-        else {
-            bindService(MediaService, mServiceConnection, BIND_AUTO_CREATE);
+        else{
+          bindService(MediaService, mServiceConnection, BIND_AUTO_CREATE);
         }
     }
 
@@ -71,8 +80,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
             mMyBinder = (MyMusicService.MyBinder) iBinder;
 
-            //mMyBinder.resetMusic();
-            mMyBinder.play_pauseMusic();
             changeIcon();
             mMyBinder.OnCompletion();
 
@@ -97,7 +104,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         public void onServiceDisconnected(ComponentName componentName) {
-
         }
     };
 
@@ -152,10 +158,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     protected void onDestroy() {
-        super.onDestroy();
-
         mHandler.removeCallbacks(mRunnable);
         unbindService(mServiceConnection);
+        super.onDestroy();
     }
 
 

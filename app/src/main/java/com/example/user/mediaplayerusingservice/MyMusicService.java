@@ -11,8 +11,9 @@ import java.io.IOException;
 
 public class MyMusicService extends Service {
 
+    private MediaPlayer mMediaPlayer;
     private MyBinder mBinder = new MyBinder();
-    private int i = 0;
+    private int i = -1;
     private String[] musicPath = new String[]{
             Environment.getExternalStorageDirectory() + "/Music/BeautifulSpider.mp3",
             Environment.getExternalStorageDirectory() + "/Music/bebiaibuyu.mp3",
@@ -20,10 +21,25 @@ public class MyMusicService extends Service {
             Environment.getExternalStorageDirectory() + "/Music/Toseethefuture.mp3"
     };
 
-    public MediaPlayer mMediaPlayer = new MediaPlayer();
+    public void onCreate() {
+        mMediaPlayer = new MediaPlayer();
+        super.onCreate();
+    }
 
-    public MyMusicService(){
-        iniMediaPlayerFile(i);
+    public int onStartCommand(Intent intent,int flag,int startId){
+        super.onStartCommand(intent,flag,startId);
+
+        int checkingSame_Song = intent.getExtras().getInt("Song");
+        if(i != checkingSame_Song) {
+            mMediaPlayer.reset();
+            i = intent.getExtras().getInt("Song");
+            iniMediaPlayerFile(i);
+        }
+
+        if(!mMediaPlayer.isPlaying()){
+            mMediaPlayer.start();
+        }
+        return START_STICKY;
     }
 
     public IBinder onBind(Intent intent) {

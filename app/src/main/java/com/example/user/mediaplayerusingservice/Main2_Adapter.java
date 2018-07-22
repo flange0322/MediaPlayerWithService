@@ -2,6 +2,7 @@ package com.example.user.mediaplayerusingservice;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -41,6 +42,9 @@ public class Main2_Adapter extends RecyclerView.Adapter {
 
         public void onClick(View view) {
             Intent intent = new Intent(mContext,MainActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putInt("Song",getAdapterPosition());
+            intent.putExtras(bundle);
             mContext.startActivity(intent);
         }
     }
