@@ -36,7 +36,7 @@ public class MyMusicService extends Service {
             iniMediaPlayerFile(i);
         }
 
-        if(!mMediaPlayer.isPlaying()){
+        if(!mMediaPlayer.isPlaying()) {
             mMediaPlayer.start();
         }
         return START_STICKY;
@@ -61,7 +61,7 @@ public class MyMusicService extends Service {
             }
         }
 
-        public void resetMusic(){
+       /* public void resetMusic(){
             mMediaPlayer.reset();
             iniMediaPlayerFile(i);
         }
@@ -71,7 +71,7 @@ public class MyMusicService extends Service {
                 mMediaPlayer.stop();
                 mMediaPlayer.release();
             }
-        }
+        }*/
 
         public void nextMusic(){
             if(mMediaPlayer != null){

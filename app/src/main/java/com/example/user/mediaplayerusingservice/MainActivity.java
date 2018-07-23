@@ -48,15 +48,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         MediaService = new Intent(this,MyMusicService.class);
         MediaService.putExtra("Song",number);
 
-        startService(MediaService);
-
         if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
           ActivityCompat.requestPermissions(MainActivity.this, new String[]{
                   Manifest.permission.WRITE_EXTERNAL_STORAGE
           }, 1);
         }
         else{
-          bindService(MediaService, mServiceConnection, BIND_AUTO_CREATE);
+            startService(MediaService);
+            bindService(MediaService, mServiceConnection, BIND_AUTO_CREATE);
         }
     }
 
@@ -104,6 +103,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         public void onServiceDisconnected(ComponentName componentName) {
+
         }
     };
 
@@ -118,6 +118,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         nextBtn.setOnClickListener(this);
         previousBtn.setOnClickListener(this);
     }
+
 
     public void changeIcon(){
         if(!mMyBinder.getMediaPlayer().isPlaying()){
@@ -158,15 +159,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     protected void onDestroy() {
+        super.onDestroy();
         mHandler.removeCallbacks(mRunnable);
         unbindService(mServiceConnection);
-        super.onDestroy();
+        if(!mMyBinder.getMediaPlayer().isPlaying()) {
+            stopService(MediaService);
+        }
     }
-
 
     private Runnable mRunnable = new Runnable() {
         public void run() {
-            if(checkingMaxSeekBar!=mMyBinder.getProgress()) {
+            if(checkingMaxSeekBar != mMyBinder.getProgress()) {
                 checkingMaxSeekBar = mMyBinder.getProgress();
                 mSeekBar.setMax(checkingMaxSeekBar);
             }
